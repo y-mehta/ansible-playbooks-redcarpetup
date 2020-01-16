@@ -10,13 +10,17 @@
 
 ## Ansible Playbooks:
 
-- Docker: ```playbooks/docker.yaml```
-- Kubernetes: ```playbooks/kube-config.yaml``` - For initial configurations and prerequisites.
-            ```playbooks/master-node.yaml``` - Initializes kubeadm, Create .kube directory in HOME, Copies kube config and Installs Pod Network on Master Node.
-            ```playbooks/worker-node.yaml``` - Get join token from master node and then use that token to join the cluster as a worker.
-- Hardening:  ```playbooks/cis_tests.yaml```   - Implemented few Controls/Recommendations from CIS Kubernetes Security Benchmark. Automatically fixes any misconfigurations found.
-            ```playbooks/cis_file_permissions.yaml``` - Contains re-usable function for testing file permissions and ownership.
-            ```playbooks/hardening.yaml```   - Installs & Configures firewalld, Installs fail2ban, Modified SSH Config to disallow Root Login and Login using Password.
+- Docker: ```playbooks/docker.yaml``` - Configure Docker on managed nodes.
+
+- Kubernetes: 
+  - ```playbooks/kube-config.yaml``` - For initial configurations and prerequisites.
+  - ```playbooks/master-node.yaml``` - Initializes kubeadm, Create .kube directory in HOME, Copies kube config and Installs Pod Network on Master Node.
+  - ```playbooks/worker-node.yaml``` - Get join token from master node and then use that token to join the cluster as a worker.
+
+- Hardening:  
+  - ```playbooks/cis_tests.yaml```   - Implemented few Controls/Recommendations from CIS Kubernetes Security Benchmark. Automatically fixes any misconfigurations found.
+  - ```playbooks/cis_file_permissions.yaml``` - Contains re-usable function for testing file permissions and ownership.
+  - ```playbooks/hardening.yaml```   - Installs & Configures firewalld, Installs fail2ban, Modified SSH Config to disallow Root Login and Login using Password.
             
 
 
