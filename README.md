@@ -1,8 +1,8 @@
 ## How to Use?
 
-Step 1: Add IP Addresses of master and worker nodes in the ```hosts``` file.
-Step 2: Configure master address and CIDR in ```variables``` file.
-Step 3: Run:  ansible-playbook configure_master_node.yaml
+- Step 1: Add IP Addresses of master and worker nodes in the ```hosts``` file.
+- Step 2: Configure master address and CIDR in ```variables``` file.
+- Step 3: Run:  ansible-playbook configure_master_node.yaml
               ansible-playbook configure_worker_node.yaml
 
 
@@ -10,11 +10,11 @@ Step 3: Run:  ansible-playbook configure_master_node.yaml
 
 ## Ansible Playbooks:
 
-Docker: ```playbooks/docker.yaml```
-Kubernetes: ```playbooks/kube-config.yaml``` - For initial configurations and prerequisites.
+- Docker: ```playbooks/docker.yaml```
+- Kubernetes: ```playbooks/kube-config.yaml``` - For initial configurations and prerequisites.
             ```playbooks/master-node.yaml``` - Initializes kubeadm, Create .kube directory in HOME, Copies kube config and Installs Pod Network on Master Node.
             ```playbooks/worker-node.yaml``` - Get join token from master node and then use that token to join the cluster as a worker.
-Hardening:  ```playbooks/cis_tests.yaml```   - Implemented few Controls/Recommendations from CIS Kubernetes Security Benchmark. Automatically fixes any misconfigurations found.
+- Hardening:  ```playbooks/cis_tests.yaml```   - Implemented few Controls/Recommendations from CIS Kubernetes Security Benchmark. Automatically fixes any misconfigurations found.
             ```playbooks/cis_file_permissions.yaml``` - Contains re-usable function for testing file permissions and ownership.
             ```playbooks/hardening.yaml```   - Installs & Configures firewalld, Installs fail2ban, Modified SSH Config to disallow Root Login and Login using Password.
             
