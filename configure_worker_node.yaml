@@ -1,0 +1,4 @@
+- import_playbook: playbooks/docker.yaml
+- import_playbook: playbooks/kube-config.yaml
+- import_playbook: playbooks/worker-node.yaml
+- import_playbook: playbooks/hardening.yaml

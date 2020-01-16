@@ -1,7 +1,7 @@
 - hosts:
         - master-nodes
   vars_files:
-          - variables
+          - ../variables
   tasks:
           - name: pull required images
             shell: kubeadm config images pull
