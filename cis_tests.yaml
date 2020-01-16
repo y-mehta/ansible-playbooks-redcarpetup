@@ -1,0 +1,13 @@
+# Implemented few Controls/Recommendations from CIS Kubernetes Security Benchmark
+- hosts:
+        - master-nodes
+  tasks:
+          # Master Node Configuration Tests
+          - include: cis_file_permissions.yaml
+            with_items:
+                    - { path: "/etc/kubernetes/manifests/kube-apiserver.yaml", perm: "644", owner: "root", group: "root" }
+                    - { path: "/etc/kubernetes/manifests/kube-controller-manager.yaml", perm: "644", owner: "root", group: "root" }
+                    - { path: "/etc/kubernetes/manifests/kube-scheduler.yaml", perm: "644", owner: "root", group: "root" }
+                    - { path: "/etc/kubernetes/manifests/etcd.yaml", perm: "644", owner: "root", group: "root" }
+                    - { path: "/var/lib/etcd", perm: "700", owner: "root", group: "root" }
+                    - { path: "/etc/kubernetes/admin.conf", perm: "644", owner: "root", group: "root" }

@@ -1,0 +1,19 @@
+- name: Check whether file permissions are 644 or more restrictive
+  stat:
+          path: "{{ item.path }}"
+  register: perm
+- debug:
+        msg: "Passed File Permission Test." #"File permissions are restrictive then 644."
+  when: perm.stat.mode is defined and perm.stat.mode <= {{ item.perm }}
+- name: "Failed the file permission test, Changed file permissions."
+  become: yes
+  shell: chmod {{ item.perm }} {{ item.path }}
+  when: perm.stat.mode is defined and perm.stat.mode > {{ item.perm }}
+# Test 1.1.2
+- debug:
+        msg: "Passed file ownership test"
+  when: perm.stat.pw_name == "{{ item.owner }}" and perm.stat.gr_name == "{{ item.group }}"
+- name: "Failed file ownership test, Changed file ownership."
+  become: yes
+  shell: chown "{{ item.owner }}":"{{ item.group }}" {{ item.path }}
+  when: perm.stat.pw_name != "{{ item.owner }}" or perm.stat.gr_name != "{{ item.group }}"

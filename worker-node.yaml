@@ -1,0 +1,20 @@
+- hosts:
+        - master-nodes
+  gather_facts: false
+  tasks:
+          - name: Get Join Token
+            become: yes
+            shell: kubeadm token create --print-join-command 2>/dev/null
+            register: join_token_output
+          - name: Set Fact Join Token
+            become: yes
+            set_fact: 
+             join_token: "{{ join_token_output.stdout_lines[0] }}"
+          
+- hosts:
+        - worker-nodes
+  tasks: 
+        - name: Join Kube Cluster
+          become: yes
+          shell: "{{ hostvars['master'].join_token }}"
+

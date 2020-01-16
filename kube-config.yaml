@@ -1,0 +1,23 @@
+- hosts:
+        - all
+  tasks:
+          - name: Add GPG Key of Kubernetes Repository
+            shell: curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+          - name: Add Kubernetes Repo to APT repositories
+            shell: add-apt-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+            become: yes
+          - name: Update packages with newly added kubernetes repo
+            shell: apt update
+            become: yes
+          - name: Install kubelet
+            shell: apt install kubelet -y
+            become: yes
+          - name: Install kubeadm
+            shell: apt install kubeadm -y
+            become: yes
+- hosts:
+        - master-nodes
+  tasks:
+          - name: Install kubectl
+            shell: apt install kubectl -y
+            become: yes

@@ -1,0 +1,26 @@
+- hosts:
+        - all
+  tasks:
+          - name: Update packages
+            shell: apt update
+            become: yes
+          - name: Install prerequisite packages
+            shell: apt install apt-transport-https ca-certificates curl software-properties-common -y
+            become: yes
+          - name: Add GPG Key of Docker Repository
+            shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+          - name: Add Docker Repo to APT repositories
+            shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+            become: yes
+          - name: Update packages with newly added docker repo
+            shell: apt update
+            become: yes
+          - name: Install docker
+            shell: apt install docker-ce -y
+            become: yes
+          - name: Enable docker system service
+            shell: systemctl enable docker
+            become: yes
+          - name: Add user to the docker group
+            shell: usermod -aG docker unqdrms
+            become: yes

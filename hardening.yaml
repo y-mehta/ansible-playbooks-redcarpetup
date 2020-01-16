@@ -1,0 +1,45 @@
+- hosts:
+        - all
+  become: yes
+  tasks:
+          - name: Install firewalld
+            shell: apt-get install firewalld -y
+          - name: Enable firewalld service
+            service:
+                    name: firewalld
+                    state: started
+                    enabled: yes
+          - name: Configure firewalld
+            firewalld:
+                    port: "{{ item  }}"
+                    state: enabled
+                    immediate: yes
+                    permanent: yes
+            with_items:
+                    - "6443/tcp"
+                    - "10250/tcp"
+          - name: Enable IPTables bridge
+            shell: echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
+          - name: Install fail2ban
+            shell: apt-get install fail2ban -y
+          - name: Enable fail2ban service
+            service:
+                    name: fail2ban
+                    state: started
+                    enabled: yes
+          - name: Disallow Root SSH Login
+            lineinfile:
+                    dest=/etc/ssh/sshd_config
+                    regexp="^PermitRootLogin"
+                    line="PermitRootLogin no"
+                    state=present
+          - name: Disallow SSH Password Authentication
+            lineinfile:
+                    dest=/etc/ssh/sshd_config
+                    regexp="^PasswordAuthentication"
+                    line="PasswordAuthentication no"
+                    state=present
+          - name: Restart SSH
+            service:
+                   name=ssh
+                   state=restarted 
